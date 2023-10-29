@@ -1,0 +1,6 @@
+data/db/
+.gitattributes
+.github
+.gitignore
+venv
+.git
