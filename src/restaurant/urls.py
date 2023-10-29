@@ -14,6 +14,6 @@ router.register('orders', OrderViewSet, basename='orders')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('restaurants/<int:pk>/menu/', RestaurantWithMenuAPIView.as_view(), name='restaurant-with-menu'),
+    path('restaurants/<int:pk>/dishes/', RestaurantWithMenuAPIView.as_view(), name='restaurant-with-menu'),
     path('restaurants/<int:pk>/orders/create/', CreateOrderAPIView.as_view(), name='create-order-for-customer')
 ]
