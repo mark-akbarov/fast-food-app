@@ -7,9 +7,9 @@ from .restaurant import Restaurant
 
 
 class OrderStatus(models.TextChoices):
+    PENDING = 'pending'
     ACCEPTED = 'accepted'
     CANCELED = 'canceled'
-    PENDING = 'pending'
     DELIVERED = 'delivered'
 
 

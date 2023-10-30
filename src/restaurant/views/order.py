@@ -40,6 +40,8 @@ class OrderViewSet(ModelViewSet):
 class MyOrdersAPIView(APIView):
     def get(self, request, *args, **kwargs):
             order = Order.objects.filter(user=request.user).last()
+            previous_orders_dishes = Order.objects.exclude(id=order.id).filter(status=OrderStatus.ACCEPTED)
+            previous_orders = sum([j.quantity for i in previous_orders_dishes for j in i.items.all()])
             dishes = sum([i.quantity for i in order.items.all()])
             if order.status == OrderStatus.PENDING:
                 return Response({"detail": "Waiting for restaurant to approve your order."})
@@ -47,7 +49,8 @@ class MyOrdersAPIView(APIView):
                 res = calculate_estimated_delivery_time(
                     dishes=dishes,
                     customer_location=order.delivery_address,
-                    restaurant_location=order.restaurant.address
+                    restaurant_location=order.restaurant.address,
+                    previous_orders=previous_orders
                 )
                 return Response({"message": f"Your delivery will arrive in {res} minutes"})
             elif order.status == OrderStatus.CANCELED:
